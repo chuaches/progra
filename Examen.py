@@ -43,12 +43,12 @@ def estado(edo):
         print("Error")
 
 
-# municipio("Jiquilpan")
+municipio("Jiquilpan")
 estado("Michoacán de Ocampo")
 
 
 
 
-# archivo = open("resultados.json", 'w') # abre el archivo datos.txt
+# archivo = open("resultados.json", 'w')
 # archivo.write(json_data)
 # archivo.close()
