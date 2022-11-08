@@ -18,37 +18,33 @@ def municipio(mun):
                     break
         archivo.close()
         json_data = json.dumps(diccionario, indent=3)
-        print(json_data)
+        return json_data
     except IOError:
         print( "Error de entrada/salida.")
 
 def estado(edo):
-    cont = 0
-    diccionario = {}
+    dic = {}
+    jsonres = open("jsonres.json", mode="w")
+    archivo = open("CPdescarga.txt", mode="r")
+
     try:
-        archivo = open("CPdescarga.txt", "r")
-        for linea in archivo:
-            d2 = linea.split("|")
-            for dic in d2[3:]:
-                if d2[4] == edo:
-                    d3 = {}
-                    d3["CP"] = d2[0]
-                    d3["Municipio"] = d2[3]
-                    diccionario[cont] = d3
-                    cont += 1
-        archivo.close()
-        json_data = json.dumps(diccionario, indent=3)
-        print(json_data)
-    except Exception:
-        print("Error")
+       if archivo.readable():
+          cont = 0
+          for ren in archivo.read().split("\n"):
+            if cont > 0:
+                 if(cont == 1):
+                    titulos = ren.split("|")
+                 else:
+                    estado = ren.split("|")
+                    if estado[4] == edo:
+                        dic[titulos[0]] = estado[0]
+                        dic[titulos[3]] = estado[3]
+            cont += 1
+       json.dump(dic, jsonres)
+       archivo.close()
+    except IndexError:
+       print("")
 
 
-municipio("Jiquilpan")
-estado("Michoacán de Ocampo")
-
-
-
-
-# archivo = open("resultados.json", 'w')
-# archivo.write(json_data)
-# archivo.close()
+print(municipio("Jiquilpan"))
+estado("Michoacï¿½n de Ocampo")
